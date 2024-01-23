@@ -1,7 +1,8 @@
 # datafun-03-analytics
+this is a desctiption of my project
 
 ## create project virtual environment
-On Mac Os, create a project virtual environment in the .venv folder
+On Mac Os, created a project virtual environment in the .venv folder
 ```vscode
 python3 -m venv .venv
 
