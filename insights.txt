@@ -1,0 +1,8 @@
+Total Rows: 67
+
+Column Averages:
+Sex: 0.00
+ "Weight (Sep)": 65.06
+ "Weight (Apr)": 66.24
+ "BMI (Sep)": 22.03
+ "BMI (Apr)": 22.48

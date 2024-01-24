@@ -46,16 +46,45 @@ def write_txt_file(folder_name, filename, data):
 
 ''' Process data and generate output '''
 
+#function to process text data, word count
 def process_text_data(input_file, output_file):
-   with open(input_file, 'r' , encoding='utf-8') as file:
-      text = file.read()
+  with open(input_file, 'r', encoding='utf-8') as file:
+    text = file.read()
+           
+    words = text.split()  
+    word_count = len(words)
 
-      #Split text into words
-      words = text.split
+#function to process CSV data
+def process_csv_data(input_csv, output_text):
+    with open(input_csv, 'r', newline='', encoding='utf-8') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        
+        headers = next(csv_reader)
+        
+        # Initialize variables for analysis
+        total_rows = 0
+        column_sums = {header: 0 for header in headers}
 
-      #calculate word count
-      word_count = len(words)
+        # Process each row in the CSV
+        for row in csv_reader:
+            total_rows += 1
+            for header, value in zip(headers, row):
+                try:
+                    column_sums[header] += float(value)
+                except ValueError:
+                  pass
 
+        # Calculate averages for each column
+        column_averages = {header: column_sums[header] / total_rows for header in headers}
+
+    # Generate insights
+    insights = f"Total Rows: {total_rows}\n\nColumn Averages:\n"
+    for header, average in column_averages.items():
+        insights += f"{header}: {average:.2f}\n"
+
+    # Save insights to text file
+    with open(output_text, 'w', encoding='utf-8') as output_file:
+        output_file.write(insights)
 
 # function to get square numbers of each number of a list
 def get_square_numbers(numbers):
@@ -117,8 +146,16 @@ text_data = "The meteorological input data for CMAQ were derived from outputs of
 write_txt_file(folder_name, filename, text_data)
 
 #call function to process text data
-input_file = "air_quality.txt"
+input_file = "company.txt"
 output_file = "word_count.txt"
+
+process_text_data(input_file, output_file)
+
+#call function to process CSV data
+input_csv = "freshman_kgs.csv"
+output_text = "insights.txt"
+
+process_csv_data(input_csv, output_text)
 
 #call function to to get square numbers of each number of a list
 get_square_numbers([6, 8, 10 ,12])
