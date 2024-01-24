@@ -6,11 +6,22 @@ import os
 import pathlib
 import math
 import davidrm_utils
+import sys
+sys.path.append("davidrodriguez@davids-mbp datafun-03-analytics %")
+import requests
 import csv
-import requests
 
-# External library imports (requires virtual environment)
-import requests
+#function to fetch txt data from the web
+def fetch_and_write_text_data(folder_name, filename, url):
+  response = requests.get(url)
+  if response.status_code == 200:
+      write_text_data(folder_name, filename, response.text)
+  else:
+      print(f"Failed to fetch text data: {response.status_code}")
+
+def write_text_data(folder_name, filename, text_data):
+  with open(f"{folder_name}/{filename}", "w", encoding="utf-8") as text_file:
+      text_file.write(text_data)
 
 
 # function to get square numbers of each number of a list
@@ -61,6 +72,10 @@ def main():
 
 # Print byline from imported module
 print(f"Byline: {davidrm_utils.byline}")
+
+#call function to fetch txt data from the web
+fetch_and_write_text_data("output_folder", "README.txt", "https://pasteur.epa.gov/uploads/10.23719/1518467/README.txt")
+
 
 #call function to to get square numbers of each number of a list
 get_square_numbers([6, 8, 10 ,12])
