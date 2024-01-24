@@ -5,15 +5,21 @@ import json
 import os
 import pathlib
 import math
-import davidrm_utils
 import sys
 sys.path.append("davidrodriguez@davids-mbp datafun-03-analytics %")
-import requests
 import csv
 from pathlib import Path
 from collections import Counter
 import string
 
+#External library imports
+import requests
+
+#import my modules
+import davidrm_utils
+import david_projsetup
+
+''' data acquisition '''
 
 #function to fetch txt data from the web
 def fetch_and_write_text_data(folder_name, filename, url):
@@ -27,6 +33,8 @@ def write_text_data(folder_name, filename, text_data):
   with open(f"{folder_name}/{filename}", "w", encoding="utf-8") as text_file:
       text_file.write(text_data)
 
+''' write data '''
+
 # function to Write functions to save content to different file types
 def write_txt_file(folder_name, filename, data):
   folder_path = Path(folder_name)
@@ -35,6 +43,18 @@ def write_txt_file(folder_name, filename, data):
   with file_path.open('w') as file:
       file.write(data)
       print(f"Text data saved to {file_path}")
+
+''' Process data and generate output '''
+
+def process_text_data(input_file, output_file):
+   with open(input_file, 'r' , encoding='utf-8') as file:
+      text = file.read()
+
+      #Split text into words
+      words = text.split
+
+      #calculate word count
+      word_count = len(words)
 
 
 # function to get square numbers of each number of a list
@@ -95,6 +115,10 @@ filename = "air_quality.txt"
 text_data = "The meteorological input data for CMAQ were derived from outputs of the Community Earth System Model and the Coupled Model version 3 following Representative Concentration Pathway 8.5, which represents a relatively high warming scenario."
 
 write_txt_file(folder_name, filename, text_data)
+
+#call function to process text data
+input_file = "air_quality.txt"
+output_file = "word_count.txt"
 
 #call function to to get square numbers of each number of a list
 get_square_numbers([6, 8, 10 ,12])
