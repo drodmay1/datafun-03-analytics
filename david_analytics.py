@@ -11,6 +11,8 @@ sys.path.append("davidrodriguez@davids-mbp datafun-03-analytics %")
 import requests
 import csv
 from pathlib import Path
+from collections import Counter
+import string
 
 
 #function to fetch txt data from the web
