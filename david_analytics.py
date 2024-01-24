@@ -1,11 +1,16 @@
 ''' Module for project 3 of 44608'''
 
-# Import necessary modules
+# Import necessary modules, Standard library imports
 import json
 import os
 import pathlib
 import math
 import davidrm_utils
+import csv
+import requests
+
+# External library imports (requires virtual environment)
+import requests
 
 
 # function to get square numbers of each number of a list
