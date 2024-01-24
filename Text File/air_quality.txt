@@ -1,0 +1,1 @@
+The meteorological input data for CMAQ were derived from outputs of the Community Earth System Model and the Coupled Model version 3 following Representative Concentration Pathway 8.5, which represents a relatively high warming scenario.

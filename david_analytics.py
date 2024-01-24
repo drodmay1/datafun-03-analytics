@@ -10,6 +10,8 @@ import sys
 sys.path.append("davidrodriguez@davids-mbp datafun-03-analytics %")
 import requests
 import csv
+from pathlib import Path
+
 
 #function to fetch txt data from the web
 def fetch_and_write_text_data(folder_name, filename, url):
@@ -22,6 +24,15 @@ def fetch_and_write_text_data(folder_name, filename, url):
 def write_text_data(folder_name, filename, text_data):
   with open(f"{folder_name}/{filename}", "w", encoding="utf-8") as text_file:
       text_file.write(text_data)
+
+# function to Write functions to save content to different file types
+def write_txt_file(folder_name, filename, data):
+  folder_path = Path(folder_name)
+  folder_path.mkdir(parents=True, exist_ok=True)  # Create the directory if it doesn't exist
+  file_path = folder_path.joinpath(filename)      
+  with file_path.open('w') as file:
+      file.write(data)
+      print(f"Text data saved to {file_path}")
 
 
 # function to get square numbers of each number of a list
@@ -76,6 +87,12 @@ print(f"Byline: {davidrm_utils.byline}")
 #call function to fetch txt data from the web
 fetch_and_write_text_data("output_folder", "README.txt", "https://pasteur.epa.gov/uploads/10.23719/1518467/README.txt")
 
+# Call function to write_txt_file
+folder_name = "Text File"
+filename = "air_quality.txt"
+text_data = "The meteorological input data for CMAQ were derived from outputs of the Community Earth System Model and the Coupled Model version 3 following Representative Concentration Pathway 8.5, which represents a relatively high warming scenario."
+
+write_txt_file(folder_name, filename, text_data)
 
 #call function to to get square numbers of each number of a list
 get_square_numbers([6, 8, 10 ,12])
