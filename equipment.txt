@@ -1,0 +1,1 @@
+{"equipment1": "nokia", "equipment2": "samsung"}
