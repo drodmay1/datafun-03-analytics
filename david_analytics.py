@@ -21,6 +21,13 @@ import openpyxl
 import davidrm_utils
 import david_projsetup
 
+class YourNameAttr:
+    def __init__(self, name):
+        self.my_name_string = name
+
+# Create an instance of YourNameAttr
+yourname_attr = YourNameAttr("David Rodriguez-Mayorquin")
+
 ''' data acquisition '''
 
 #function to fetch txt data from the web
@@ -134,7 +141,33 @@ def process_json_data_from_url(json_url):
   except Exception as e:
       return f"An error occurred: {e}"
   
-  ''' extra functions '''
+  ''' Implement Exception Handling '''
+def fetch_txt_data(folder_name, url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  
+        # Will raise an HTTPError 
+        # if the HTTP request returns an unsuccessful status code
+
+        # Assuming the response content is text data
+        file_path = Path(folder_name) / 'data.txt'
+        with open(file_path, 'w') as file:
+            file.write(response.text)
+        print(f"Text data saved to {file_path}")
+
+    except requests.exceptions.HTTPError as errh:
+        print(f"Http Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"Oops: Something Else: {err}")
+    except IOError as e:
+        print(f"I/O error({e.errno}): {e.strerror}")
+
+
+''' extra functions '''
 
 # function to get square numbers of each number of a list
 def get_square_numbers(numbers):
@@ -178,9 +211,6 @@ def create_folders_from_list(folder_names):
   list = ['cradlepoint', 'ciena', 'accedian', 'mpls']
   for item in list:
     pathlib.Path(str(item)).mkdir(exist_ok=True)
-
-def main():
-  ''' Main function '''
 
 # Print byline from imported module
 print(f"Byline: {davidrm_utils.byline}")
@@ -239,6 +269,12 @@ save_to_folder(data_to_save, folder_to_save, file_to_save)
 #call function to create folders from a list
 list = ['fiber', 'copper', 'rj45', 'sfp']
 create_folders_from_list(list)
+
+def main():
+  ''' Main function to demonstrate module capabilities '''
+print(f"Name: {yourname_attr.my_name_string}")
+
+json_url = 'https://freetestdata.com/wp-content/uploads/2023/04/2.4KB_JSON-File_FreeTestData.json'
 
 if __name__ == '__main__':
     main()
