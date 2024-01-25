@@ -14,6 +14,8 @@ import string
 
 #External library imports
 import requests
+import pandas as pd
+import openpyxl
 
 #import my modules
 import davidrm_utils
@@ -86,6 +88,54 @@ def process_csv_data(input_csv, output_text):
     with open(output_text, 'w', encoding='utf-8') as output_file:
         output_file.write(insights)
 
+#function to process excel data
+def process_excel_data(input_excel, output_text):
+    try:
+        # Read Excel file
+        df = pd.read_excel(input_excel)
+
+        # Get basic statistics and information about the data
+        summary = df.describe()
+
+        # Convert the summary to a string for saving
+        summary_str = summary.to_string()
+
+        # Save the summary to a text file
+        with open(output_text, 'w', encoding='utf-8') as output_file:
+            output_file.write(summary_str)
+
+        print(f"Summary saved to {output_text}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+#function to process JSON data
+def process_json_data_from_url(json_url):
+  try:
+      # Fetch JSON data from the URL
+      response = requests.get(json_url)
+      response.raise_for_status()  # Raise an HTTPError for bad responses
+
+      # Load JSON data
+      data = response.json()
+
+      # Extract relevant information (modify as per your JSON structure)
+      name = data.get('name', 'N/A')
+      code = data.get('code', 'N/A')
+      city = data.get('city', 'N/A')
+
+      # Create a human-readable text format
+      result_text = f"Name: {name}\nCode: {code}\nCity: {city}"
+
+      return result_text
+  except requests.exceptions.RequestException as e:
+      return f"Error fetching data from URL: {e}"
+  except json.JSONDecodeError as e:
+      return f"Error decoding JSON: {e}"
+  except Exception as e:
+      return f"An error occurred: {e}"
+  
+  ''' extra functions '''
+
 # function to get square numbers of each number of a list
 def get_square_numbers(numbers):
   """Get the square of each number in the list."""
@@ -156,6 +206,20 @@ input_csv = "freshman_kgs.csv"
 output_text = "insights.txt"
 
 process_csv_data(input_csv, output_text)
+
+#call function to process excel data
+input_excel = 'modem_upgrades.xlsx'
+output_text = 'summary_excel.txt'
+
+process_excel_data(input_excel, output_text)
+
+#call function to process JSON data
+json_url = "https://freetestdata.com/wp-content/uploads/2023/04/2.4KB_JSON-File_FreeTestData.json"
+result = process_json_data_from_url(json_url)
+process_json_data_from_url(json_url)
+
+print(result)
+
 
 #call function to to get square numbers of each number of a list
 get_square_numbers([6, 8, 10 ,12])
